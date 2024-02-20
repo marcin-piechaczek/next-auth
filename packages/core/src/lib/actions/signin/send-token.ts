@@ -16,9 +16,9 @@ export async function sendToken(
   const { body } = request
   const { provider, callbacks, adapter } = options
   const normalizer = provider.normalizeIdentifier ?? defaultNormalizer
-  const email = normalizer(body?.email)
+  const email = normalizer(body.email);
 
-  const defaultUser = { id: crypto.randomUUID(), email, emailVerified: null }
+  const defaultUser = { id: crypto.randomUUID(), email, emailVerified: null, ...body }
   const user = (await adapter!.getUserByEmail(email)) ?? defaultUser
 
   const account = {
